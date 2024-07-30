@@ -1,48 +1,35 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const shazamCoreApi = createApi({
-  reducerPath: "shazamCoreApi",
+  reducerPath: 'shazamCoreApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://shazam-core.p.rapidapi.com/",
+    baseUrl: 'https://nettalez.com/myReq/',
     prepareHeaders: (headers) => {
-      headers.set(
-        "X-RapidAPI-Key",
-        "ce5f5cf2cbmsh3141fca85778b6cp16a433jsn839235a200e3"
-      );
-
+      headers.set('x-rapidapi-key', 'theminent');
       return headers;
     },
   }),
   endpoints: (builder) => ({
-    getTopCharts: builder.query({ query: () => "v1/charts/world" }),
-    getSongsByGenre: builder.query({
-      query: (genre) => `v1/charts/genre-world?genre_code=${genre}`,
+    getTopCharts: builder.query({
+      query: () => '',
     }),
-    getSongsByCountry: builder.query({
-      query: (countryCode) => `v1/charts/country?country_code=${countryCode}`,
-    }),
-    getSongsBySearch: builder.query({
-      query: (searchTerm) =>
-        `v1/search/multi?search_type=SONGS_ARTISTS&query=${searchTerm}`,
-    }),
-    getArtistDetails: builder.query({
-      query: (artistId) => `v2/artists/details?artist_id=${artistId}`,
-    }),
-    getSongDetails: builder.query({
-      query: ({ songid }) => `v1/tracks/details?track_id=${songid}`,
-    }),
-    getSongRelated: builder.query({
-      query: ({ songid }) => `v1/tracks/related?track_id=${songid}`,
-    }),
+
+    getSongsBySearch: builder.query({ query: (searchTerm) => `/?query=${searchTerm}` }),
+    getSongsByGenre: builder.query({ query: (genre) => `/?genreCode=${genre}` }),
+    getSongsByCountry: builder.query({ query: (country) => `/?country_code=${country}` }),
+    getArtistDetails: builder.query({ query: (artistId) => `artists/?artist_id=${artistId}`}),
+    getSongDetails: builder.query({ query: ({ songid }) => `songData/?track_id=${songid}` }),
+    getSongRelated: builder.query({ query: ({ songid }) => `songs/?track_id=${songid}` }),
   }),
 });
 
-export const {
-  useGetTopChartsQuery,
-  useGetSongsByGenreQuery,
-  useGetSongsByCountryQuery,
-  useGetSongsBySearchQuery,
-  useGetArtistDetailsQuery,
-  useGetSongDetailsQuery,
-  useGetSongRelatedQuery,
+
+export const { 
+    useGetTopChartsQuery,
+    useGetSongsByGenreQuery,
+    useGetSongsByCountryQuery,
+    useGetSongsBySearchQuery,
+    useGetArtistDetailsQuery,
+    useGetSongDetailsQuery,
+    useGetSongRelatedQuery,
 } = shazamCoreApi;
